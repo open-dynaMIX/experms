@@ -441,7 +441,7 @@ def action(directory, event, ruledir, restore):
           return
         else:
           changedchown = False
-          errmessage = strftime("%Y-%m-%d_%H:%M:%S", localtime()) + " An unexpeted Error occured for '" + directory + "'"
+          errmessage = strftime("%Y-%m-%d_%H:%M:%S", localtime()) + " An unexpected Error occured for '" + directory + "'"
           if not restore == True or debug == True:
             print >> sys.stderr, errmessage
           else:
@@ -451,7 +451,7 @@ def action(directory, event, ruledir, restore):
           return
       except:
         changedchown = False
-        errmessage = strftime("%Y-%m-%d_%H:%M:%S", localtime()) + " An unexpeted Error occured for '" + directory + "'"
+        errmessage = strftime("%Y-%m-%d_%H:%M:%S", localtime()) + " An unexpected Error occured for '" + directory + "'"
         if not restore == True or debug == True:
           print >> sys.stderr, errmessage
         else:
@@ -484,7 +484,7 @@ def action(directory, event, ruledir, restore):
       return
     else:
       changedchmod = False
-      errmessage = strftime("%Y-%m-%d_%H:%M:%S", localtime()) + " An unexpeted Error occured for '" + directory + "'"
+      errmessage = strftime("%Y-%m-%d_%H:%M:%S", localtime()) + " An unexpected Error occured for '" + directory + "'"
       if not restore == True or debug == True:
         print >> sys.stderr, errmessage
       else:
@@ -494,7 +494,7 @@ def action(directory, event, ruledir, restore):
       return
   except:
     changedchmod = False
-    errmessage = strftime("%Y-%m-%d_%H:%M:%S", localtime()) + " An unexpeted Error occured for '" + directory + "'"
+    errmessage = strftime("%Y-%m-%d_%H:%M:%S", localtime()) + " An unexpected Error occured for '" + directory + "'"
     if not restore == True or debug == True:
       print >> sys.stderr, errmessage
     else:
