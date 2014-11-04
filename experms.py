@@ -740,11 +740,9 @@ def main():
         elif 'log' == sys.argv[1]:
             print_version()
             if not os.path.isfile(stdoutfile):
-                print "There is no logfile to show."
-                sys.exit(0)
+                print "There is no logfile to show yet."
             elif os.stat(stdoutfile)[6] == 0:
-                print "There is no logfile to show."
-                sys.exit(0)
+                print "There is no logfile to show yet."
             from subprocess import call
             print "\033[32;1mCalling 'tail -F", stdoutfile + "':\033[0m"
             try:
@@ -754,11 +752,9 @@ def main():
         elif 'err' == sys.argv[1]:
             print_version()
             if not os.path.isfile(stderrfile):
-                print "There is no logfile to show."
-                sys.exit(0)
+                print "There is no logfile to show yet."
             elif os.stat(stderrfile)[6] == 0:
-                print "There is no logfile to show."
-                sys.exit(0)
+                print "There is no logfile to show yet."
             from subprocess import call
             print "\033[32;1mCalling 'tail -F", stderrfile + "':\033[0m\n"
             try:
