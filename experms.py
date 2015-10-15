@@ -727,7 +727,7 @@ def main():
         elif 'status' == sys.argv[1]:
             # Check for a pidfile to see if the daemon is running
             isrunning = checkpid()
-            if not isrunning == False:
+            if isrunning:
                 print ("\033[32;1mExperms v" + exversion + " is running with "
                        "the PID " + str(isrunning) + ".\033[0m")
                 config = daemon.loadconfig()

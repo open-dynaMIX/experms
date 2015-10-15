@@ -96,17 +96,17 @@ def checkoctalperms(octalperms, chmodfd, i, debug):
 class Check(object):
     """
     Read the configfile and return the values:
-    restore = boolean
-    logit = boolean
-    sectionname = ['section1','section2','section3']
-    dirname = ['dir1','dir2','dir3']
-    owner = ['own1','own2','own3']
-    group = ['grp1','grp2','grp3']
-    chmodf = ['oct1','oct2','oct3']
-    chmodd = ['oct1','oct2','oct3']
-    excludedir = ['excludedir1','excludedir2','excludedir3']
-    excludepattern = ['regex1','regex2','regex3']
-    doit = ['oct1','oct2','oct3']
+    self.restore = boolean
+    self.logit = boolean
+    self.sectionname = ['section1','section2','section3']
+    self.dirname = ['dir1','dir2','dir3']
+    self.owner = ['own1','own2','own3']
+    self.group = ['grp1','grp2','grp3']
+    self.chmodf = ['oct1','oct2','oct3']
+    self.chmodd = ['oct1','oct2','oct3']
+    self.excludedir = ['excludedir1','excludedir2','excludedir3']
+    self.excludepattern = ['regex1','regex2','regex3']
+    self.doit = ['oct1','oct2','oct3']
     The list 'doit' contains octal value:
     1 = chown
     2 = chmodf
