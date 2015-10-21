@@ -40,7 +40,7 @@ def check_path(parser, section, debug):
             else:
                 path = os.path.expanduser(dirname)
                 if debug == True:
-                    print >> sys.stderr, ("'path' in section '" + section +
+                    print >> sys.stderr, ("[debug] 'path' in section '" + section +
                                           "' is valid")
     else:
         print >> sys.stderr, ("Error in section " + section +

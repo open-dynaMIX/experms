@@ -32,6 +32,7 @@ import ConfigParser
 from configfile.check_printlog import check_printlog
 from configfile.check_restore import check_restore
 from configfile.check_path import check_path
+from configfile.check_owner import check_owner
 #from pwd import getpwnam, getpwuid
 #from grp import getgrnam, getgrgid
 #from re import compile as re_compile
@@ -61,7 +62,7 @@ class Check(object):
 
         # create the needed lists
         self.sectionname = []
-        self.dirname = []
+        self.path = []
         self.owner = []
         self.group = []
         self.chmodf = []
@@ -119,10 +120,20 @@ class Check(object):
             if section == 'general':
                 continue
             sectionfound = True
+
             self.sectionname.append(section)
-            self.path = check_path(self.parser, section, self.debug)
-            if not self.path:
+
+            temppath = check_path(self.parser, section, self.debug)
+            if not temppath:
                 self.errorsoccured = True
+            else:
+                self.path.append(temppath)
+
+            tempowner = check_owner(self.parser, section, self.debug)
+            if tempowner == False:
+                self.errorsoccured = True
+            else:
+                self.owner.append(tempowner)
 
         if not sectionfound:
             print >> sys.stderr, ("Error: No directory-section "
