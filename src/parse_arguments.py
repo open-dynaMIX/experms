@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 import argparse
@@ -29,3 +28,7 @@ class ParseArgs(object):
                                   "directories to watch and exit.")
 
         self.args = self.parser.parse_args()
+        self.debug = self.args.debug
+        self.restore = self.args.restore
+        self.version = self.args.version
+        self.count = self.args.count
