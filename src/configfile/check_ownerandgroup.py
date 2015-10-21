@@ -30,7 +30,10 @@ def check_ownerandgroup(parser, section, oorg, debug):
     else:
         switch = "Group"
 
-    if parser.has_option(section, oorg):
+    if not parser.has_option(section, oorg):
+        owner = None
+        print >> sys.stderr, ("[debug] '%s' is not set." % oorg)
+    else:
         tempowner = parser.get(section, oorg)
         if tempowner == '':
             owner = None
@@ -73,8 +76,5 @@ def check_ownerandgroup(parser, section, oorg, debug):
                     if debug == True:
                         print >> sys.stderr, ("[debug] '%s' in section '%s' "
                                               "is valid" % (oorg, section))
-    else:
-        owner = None
-        print >> sys.stderr, ("[debug] '%s' is not set." % oorg)
 
     return owner
