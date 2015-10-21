@@ -56,7 +56,8 @@ def check_owner(parser, section, debug):
                 else:
                     owner = tempowner
                     if debug == True:
-                        print "'user' in section '" + section + "' is valid"
+                        print >> sys.stderr, ("[debug] 'user' in section '%s' "
+                                              "is valid" % section)
     else:
         owner = None
 

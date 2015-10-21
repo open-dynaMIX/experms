@@ -27,24 +27,22 @@ def check_path(parser, section, debug):
     if parser.has_option(section, 'path'):
         dirname = parser.get(section, 'path').rstrip('/')
         if dirname == '':
-            print >> sys.stderr, ("Error in section " + section
-                                  + ": 'path' is empty.\nIf you have "
-                                  "started experms for the first time,"
-                                  " please edit the configfile first.")
+            print >> sys.stderr, ("Error in section '%s': 'dirname' is not set."
+                                  % section)
             path = None
         else:
             if not os.path.isdir(os.path.expanduser(dirname)):
                 path = None
-                print >> sys.stderr, ("Error in section " + section +
-                                      ": 'path' " + dirname + "/ doesn't exist")
+                print >> sys.stderr, ("Error in section '%s': 'path' '%s/' "
+                                      "doesn't exist" % (section, dirname))
             else:
                 path = os.path.expanduser(dirname)
                 if debug == True:
-                    print >> sys.stderr, ("[debug] 'path' in section '" + section +
-                                          "' is valid")
+                    print >> sys.stderr, ("[debug] 'path' in section '%s' "
+                                          "is valid" % section)
     else:
-        print >> sys.stderr, ("Error in section " + section +
-                              ": 'dirname' is not set.")
+        print >> sys.stderr, ("Error in section '%s': 'dirname' is not set."
+                              % section)
         path = None
 
     return path
