@@ -29,7 +29,10 @@ def verify_chmod(description):
         except ValueError:
             return False
         else:
-            return True
+            if len(description) < 3 or len(description) > 4:
+                return False
+            else:
+                return True
     else:
         p = re.compile(r"^([ugo]*|[a]?)([+\-=])([ugo]|[rwx]*)$")
         if p.match(description):
