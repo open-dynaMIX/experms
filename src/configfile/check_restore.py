@@ -27,12 +27,12 @@ def check_restore(parser, restoredefault, debug):
         restore = parser.get('general', 'restore').lower()
         if restore == 'yes':
             restore = True
-            if debug == True:
+            if debug:
                 print >> sys.stderr, ("[debug] experms will restore at "
                                       "startup")
         elif restore == 'no':
             restore = False
-            if debug == True:
+            if debug:
                 print >> sys.stderr, ("[debug] experms won't restore at "
                                       "startup")
         else:
@@ -41,7 +41,7 @@ def check_restore(parser, restoredefault, debug):
             restore = None
     else:
         restore = restoredefault
-        if debug == True:
+        if debug:
             print >> sys.stderr, ("[debug] experms won't restore at startup")
 
     return restore

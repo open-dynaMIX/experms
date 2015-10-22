@@ -21,24 +21,26 @@ along with Experms.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import sys
+from action.chmodsym import verify_chmod
 
-def check_printlog(parser, logitdefault, debug):
-    if parser.has_option('general', 'log_activities'):
-        logit = parser.get('general', 'log_activities').lower()
-        if logit == 'yes':
-            logit = True
+def check_chmod(parser, section, what, debug):
+    if parser.has_option(section, what):
+        tempchmod = parser.get(section, what)
+        if verify_chmod(tempchmod):
+            chmod = tempchmod
             if debug:
-                print >> sys.stderr, ("[debug] experms will print a log")
-        elif logit == 'no':
-            logit = False
-            if debug:
-                print >> sys.stderr, ("[debug] experms won't print a log")
+                print >> sys.stderr, ("[debug] '%s' in section '%s' "
+                                      "is valid" % (what, section))
         else:
-            print >> sys.stderr, ("Error: 'log_activities' "
-                                  "must be either 'yes' or 'no'")
-            logit = None
+            chmod = False
+            print >> sys.stderr, ("Error in section %s: %s is not a valid "
+                                  "setting." % (section, what))
     else:
-        logit = logitdefault
+        chmod = None
         if debug:
-            print >> sys.stderr, ("[debug] experms won't print a log")
-    return logit
+            print >> sys.stderr, ("[debug] '%s' in section '%s' not set."
+                                  % (what, section))
+
+    return chmod
+
+

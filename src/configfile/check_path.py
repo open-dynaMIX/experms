@@ -37,7 +37,7 @@ def check_path(parser, section, debug):
                                       "doesn't exist" % (section, dirname))
             else:
                 path = os.path.expanduser(dirname)
-                if debug == True:
+                if debug:
                     print >> sys.stderr, ("[debug] 'path' in section '%s' "
                                           "is valid" % section)
     else:

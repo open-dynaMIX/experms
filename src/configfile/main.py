@@ -33,6 +33,7 @@ from configfile.check_printlog import check_printlog
 from configfile.check_restore import check_restore
 from configfile.check_path import check_path
 from configfile.check_ownerandgroup import check_ownerandgroup
+from configfile.check_chmod import check_chmod
 #from pwd import getpwnam, getpwuid
 #from grp import getgrnam, getgrgid
 #from re import compile as re_compile
@@ -140,6 +141,18 @@ class Check(object):
                 self.errorsoccured = True
             else:
                 self.group.append(tempgroup)
+
+            tempchmodf = check_chmod(self.parser, section, 'chmodf', self.debug)
+            if tempgroup == False:
+                self.errorsoccured = True
+            else:
+                self.chmodf.append(tempchmodf)
+
+            tempchmodd = check_chmod(self.parser, section, 'chmodd', self.debug)
+            if tempgroup == False:
+                self.errorsoccured = True
+            else:
+                self.chmodd.append(tempchmodd)
 
         if not sectionfound:
             print >> sys.stderr, ("Error: No directory-section "
