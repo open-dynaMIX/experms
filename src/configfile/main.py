@@ -30,6 +30,7 @@ from configfile.check_path import check_path
 from configfile.check_ownerandgroup import check_ownerandgroup
 from configfile.check_chmod import check_chmod
 from configfile.check_excludepath import check_excludepath
+from configfile.check_excluderegex import check_excluderegex
 
 
 class Check(object):
@@ -63,12 +64,12 @@ class Check(object):
         self.excludepath = []
         self.excluderegex = []
 
-        #prepare the error variable
         self.errorsoccured = False
 
         configfile = self.find_configfile()
 
         parser = self.parse_configfile(configfile)
+
         self.call_checks(parser)
 
 
@@ -94,6 +95,22 @@ class Check(object):
         except ConfigParser.MissingSectionHeaderError:
             pass
         return parser
+
+
+    def call_checks(self, parser):
+        self.check_general(parser)
+
+        if not self.check_sections(parser):
+            print >> sys.stderr, ("Error: No directory-section "
+                                  "was found.\nIf you have started experms"
+                                  " for the first time, please edit the "
+                                  "configfile first (usually "
+                                  "/etc/experms.conf)")
+            self.errorsoccured = True
+
+        if self.errorsoccured:
+            print >> sys.stderr, ("Aborting!")
+            sys.exit(1)
 
 
     def check_general(self, parser):
@@ -127,13 +144,15 @@ class Check(object):
             else:
                 self.path.append(temppath)
 
-            tempowner = check_ownerandgroup(parser, section, 'owner', self.debug)
+            tempowner = check_ownerandgroup(parser, section, 'owner',
+                                            self.debug)
             if tempowner == False:
                 self.errorsoccured = True
             else:
                 self.owner.append(tempowner)
 
-            tempgroup = check_ownerandgroup(parser, section, 'group', self.debug)
+            tempgroup = check_ownerandgroup(parser, section, 'group',
+                                            self.debug)
             if tempgroup == False:
                 self.errorsoccured = True
             else:
@@ -151,7 +170,8 @@ class Check(object):
             else:
                 self.chmodd.append(tempchmodd)
 
-            tempexcludepath = check_excludepath(parser, section, self.path[-1], self.debug)
+            tempexcludepath = check_excludepath(parser, section,
+                                                self.path[-1], self.debug)
             excludepatherror = False
             for location in tempexcludepath:
                 if not location:
@@ -162,21 +182,11 @@ class Check(object):
                 self.excludepath.append(tempexcludepath)
 
 
+            tempexcluderegex = check_excluderegex(parser, section, self.debug)
+            if tempexcluderegex == False:
+                self.errorsoccured = True
+            else:
+                self.excluderegex.append(tempexcluderegex)
+
+
         return sectionfound
-
-
-    def call_checks(self, parser):
-        self.check_general(parser)
-
-        if not self.check_sections(parser):
-            print >> sys.stderr, ("Error: No directory-section "
-                                  "was found.\nIf you have started experms"
-                                  " for the first time, please edit the "
-                                  "configfile first (usually "
-                                  "/etc/experms.conf)")
-            self.errorsoccured = True
-
-        if self.errorsoccured:
-            print >> sys.stderr, ("Aborting!")
-            sys.exit(1)
-
