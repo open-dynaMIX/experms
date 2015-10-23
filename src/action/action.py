@@ -23,7 +23,7 @@ def main(path, event, isdir, config, ruledir, debug):
 
     somethinghappened = False
 
-    if chown(path, actperms[0], config.owner[ruledir], debug):
+    if chown(path, actperms, config, ruledir, debug):
         somethinghappened = True
         if debug:
             print >> sys.stderr, ("[debug] Section '%s': changed owner of "
