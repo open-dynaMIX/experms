@@ -19,7 +19,6 @@ class EventHandler(pyinotify.ProcessEvent):
         pass
 
     def process_IN_ATTRIB(self, event):
-        print event.pathname, "IN_ATTRIB", event.dir
         prepare(event.pathname, "IN_ATTRIB", event.dir, self.config, self.debug)
 
     def process_IN_CLOSE_NOWRITE(self, event):
@@ -31,8 +30,6 @@ class EventHandler(pyinotify.ProcessEvent):
         pass
 
     def process_IN_CREATE(self, event):
-        print event.pathname, "IN_CREATE", event.dir
-        pass
         prepare(event.pathname, "IN_CREATE", event.dir, self.config, self.debug)
 
     def process_IN_DELETE(self, event):
@@ -40,7 +37,6 @@ class EventHandler(pyinotify.ProcessEvent):
         pass
 
     def process_IN_MODIFY(self, event):
-        print event.pathname, "IN_MODIFY", event.dir
         prepare(event.pathname, "IN_MODIFY", event.dir, self.config, self.debug)
 
     def process_IN_OPEN(self, event):
@@ -58,11 +54,7 @@ class EventHandler(pyinotify.ProcessEvent):
             for root, dirnames, filenames in os.walk(event.pathname):
                 for filename in filenames:
                     filenamewrite = os.path.join(root, filename)
-                    print filenamewrite, "IN_MOVED_TO", False
                     prepare(filenamewrite, "IN_MOVED_TO", False, self.config, self.debug)
                 for dirname in dirnames:
                     dirnamewrite = os.path.join(root, dirname)
-                    print dirnamewrite, "IN_MOVED_TO", True
                     prepare(dirnamewrite, "IN_MOVED_TO", True, self.config, self.debug)
-        print event.pathname, "IN_MOVED_TO", event.dir
-
