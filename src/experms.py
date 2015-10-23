@@ -3,8 +3,8 @@
 
 import sys
 from parse_arguments import parse_arguments
-# import parse_arguments
 import configfile.main
+from watch.start_pyinotify import start_pyinotify
 
 
 # global variables
@@ -33,6 +33,8 @@ def main():
         debug_message()
 
     config = configfile.main.Check(args.debug)
+    start_pyinotify(config.path, args.debug)
+
     sys.exit(0)
 
     #handle(args.args)
