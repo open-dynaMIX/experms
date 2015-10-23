@@ -16,15 +16,16 @@ def debug_message():
     print >> sys.stderr, ("[debug] Argument handling complete")
 
 def main():
-    args = parse_arguments()
-    print "Experms v" + version
-    if args.version:
-        sys.exit(0)
-
     if not os.geteuid() == 0:
         print >> sys.stderr, ("You need to run experms with root privileges."
                               "\nAborting.")
-        sys.exit(1)
+    sys.exit(1)
+
+    args = parse_arguments()
+
+    if args.version:
+        print "Experms v" + version
+        sys.exit(0)
 
     if args.restore:
         if args.debug:

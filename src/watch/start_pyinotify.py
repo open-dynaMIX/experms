@@ -31,6 +31,9 @@ def start_pyinotify(config, debug):
     # Start watching the paths
     wdd = wm.add_watch(config.path, mask, rec=True, auto_add=True)
 
+    if debug:
+        print >> sys.stderr, ("[debug] Start to watch files.")
+
     try:
         while True:
             time.sleep(0.05)
