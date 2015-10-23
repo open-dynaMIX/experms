@@ -50,7 +50,7 @@ def check_ownerandgroup(parser, section, oorg, debug):
                         grp.getgrnam(tempowner)
                 except KeyError:
                     owner = False
-                    print >> sys.stderr, ("Error in section %s: %s %s "
+                    print >> sys.stderr, ("Error in section '%s': %s '%s' "
                                           "doesn't exist." % (section, switch,
                                           tempowner))
                 else:
@@ -69,7 +69,7 @@ def check_ownerandgroup(parser, section, oorg, debug):
                     else:
                         grp.getgrgid(tempowner)
                 except KeyError:
-                    print >> sys.stderr, ("Error in section %s: %s %s "
+                    print >> sys.stderr, ("Error in section '%s': %s '%s' "
                                           "doesn't exist." % (section, switch,
                                           tempowner))
                     owner = False

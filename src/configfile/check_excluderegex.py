@@ -36,7 +36,7 @@ def check_excluderegex(parser, section, debug):
                 re.compile(tempexcluderegex)
             except:
                 print >> sys.stderr, ("Error in section '%s': "
-                                      "'excludepattern' must be a regular "
+                                      "'excluderegex' must be a regular "
                                       "expression." % section)
                 excluderegex = False
             else:

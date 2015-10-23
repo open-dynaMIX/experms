@@ -35,7 +35,7 @@ def check_excludepath(parser, section, path, debug):
             else:
                 if not os.path.isdir(item) and not os.path.isfile(item):
                     print >> sys.stderr, ("Error in section '%s': "
-                                          "'excludepath' %s doesn't exist."
+                                          "'excludepath' '%s' doesn't exist."
                                           % (section, item))
                     excludepath.append(False)
                 else:

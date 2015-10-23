@@ -33,7 +33,7 @@ def check_chmod(parser, section, what, debug):
                                       "is valid" % (what, section))
         else:
             chmod = False
-            print >> sys.stderr, ("Error in section %s: %s is not a valid "
+            print >> sys.stderr, ("Error in section '%s': '%s' is not a valid "
                                   "setting." % (section, what))
     else:
         chmod = None

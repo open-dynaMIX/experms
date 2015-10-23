@@ -181,12 +181,25 @@ class Check(object):
             else:
                 self.excludepath.append(tempexcludepath)
 
-
             tempexcluderegex = check_excluderegex(parser, section, self.debug)
             if tempexcluderegex == False:
                 self.errorsoccured = True
             else:
                 self.excluderegex.append(tempexcluderegex)
 
+            if not self.check_final():
+                print >> sys.stderr, ("Error in section '%s': No actions are "
+                                      "configured to be performed." % section)
+                self.errorsoccured = True
 
         return sectionfound
+
+
+    def check_final(self):
+        for setting in [self.owner[-1], self.group[-1], self.chmodf[-1],
+                        self.chmodd[-1]]:
+            dosomething = False
+            if setting:
+                dosomething = True
+
+        return dosomething
