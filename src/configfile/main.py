@@ -56,15 +56,15 @@ class Check(object):
     def find_configfile(self):
         if os.path.isfile('/etc/experms.conf'):
             configfile = '/etc/experms.conf'
-        elif os.path.isfile(sys.path[0] + '/experms.conf'):
-            configfile = sys.path[0] + '/experms.conf'
+        elif os.path.isfile(sys.path[0] + '/../experms.conf'):
+            configfile = sys.path[0] + '/../experms.conf'
         else:
             print >> sys.stderr, ("\033[31;1mError: No configuration-file "
                                   "(/etc/experms.conf) was found.\033[0m")
             sys.exit(1)
         if self.debug:
             print >> sys.stderr, ("[debug] Using configuration-file '%s'"
-                                  % (configfile))
+                                  % (os.path.abspath(configfile)))
         return configfile
 
 
@@ -176,10 +176,13 @@ class Check(object):
 
 
     def check_final(self):
-        for setting in [self.owner[-1], self.group[-1], self.chmodf[-1],
-                        self.chmodd[-1]]:
-            dosomething = False
-            if setting:
-                dosomething = True
+        try:
+            for setting in [self.owner[-1], self.group[-1], self.chmodf[-1],
+                            self.chmodd[-1]]:
+                dosomething = False
+                if setting:
+                    dosomething = True
+        except IndexError:
+            dosomething = True
 
         return dosomething
