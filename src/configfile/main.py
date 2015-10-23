@@ -4,13 +4,13 @@
 import sys
 import os
 import ConfigParser
-from configfile.check_printlog import check_printlog
-from configfile.check_restore import check_restore
-from configfile.check_path import check_path
-from configfile.check_ownerandgroup import check_ownerandgroup
-from configfile.check_chmod import check_chmod
-from configfile.check_excludepath import check_excludepath
-from configfile.check_excluderegex import check_excluderegex
+from check_printlog import check_printlog
+from check_restore import check_restore
+from check_path import check_path
+from check_ownerandgroup import check_ownerandgroup
+from check_chmod import check_chmod
+from check_excludepath import check_excludepath
+from check_excluderegex import check_excluderegex
 
 
 class Check(object):
@@ -35,7 +35,7 @@ class Check(object):
         self.restoredefault = False
 
         # create the needed lists
-        self.sectionname = []
+        self.section = []
         self.path = []
         self.owner = []
         self.group = []
@@ -116,7 +116,7 @@ class Check(object):
                 continue
             sectionfound = True
 
-            self.sectionname.append(section)
+            self.section.append(section)
 
             temppath = check_path(parser, section, self.debug)
             if not temppath:

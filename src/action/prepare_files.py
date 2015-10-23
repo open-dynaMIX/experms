@@ -4,6 +4,7 @@ import sys
 import os
 import time
 import re
+from action import main as action
 
 
 
@@ -14,9 +15,13 @@ def prepare(path, event, isdir, config, debug):
      - Check if the file is excluded
     """
     if debug:
+        if isdir:
+            logpath = path + "/"
+        else:
+            logpath = path
         print >> sys.stderr, ("[debug] %s %s event to process: %s, %s"
                               % (time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime()),
-                              "%.20f" % time.time(), event, path))
+                              "%.20f" % time.time(), event, logpath))
 
 
     dirhighest = 0
@@ -62,7 +67,5 @@ def prepare(path, event, isdir, config, debug):
     if highest > dirhighest:
         return
 
-    print path, event, ruledir
-
-    # action(directory, event, ruledir, restore)
+    action(path, event, isdir, config, ruledir, debug)
 
