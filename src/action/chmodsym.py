@@ -46,8 +46,6 @@ def chmod(path, actperms, description):
         else:
             return False
 
-chmod.regex = None
-
 
 
 def handle_octal(path, actperms, description):
@@ -63,28 +61,29 @@ def handle_symbolic(path, actperms, description):
     if chmod.regex is None:
         chmod.regex = re.compile(r"^(?P<who>[ugo]*|[a]?)(?P<op>[+\-=])"
                                   "(?P<value>[ugo]|[rwx]*)$")
-        mo = chmod.regex.match(description)
-        who, op, value = mo.group("who"), mo.group("op"), mo.group("value")
-        if not who:
-            who = "a"
-        mode = actperms[2]
-        modeold = mode
-        for person in who:
-            if value in ("o", "g", "u"):
-                mask = (ors((stat_bit(person, z) for z in "rwx"
-                        if (mode & stat_bit(value, z)))))
-            else:
-                mask = ors((stat_bit(person, z) for z in value))
-            if op == "=":
-                mode &= ~ ors((stat_bit(person, z) for z in  "rwx"))
-            mode = (mode & ~mask) if (op == "-") else (mode | mask)
-
-        if mode == modeold:
-            return False
+    mo = chmod.regex.match(description)
+    who, op, value = mo.group("who"), mo.group("op"), mo.group("value")
+    if not who:
+        who = "a"
+    mode = actperms[2]
+    modeold = mode
+    for person in who:
+        if value in ("o", "g", "u"):
+            mask = (ors((stat_bit(person, z) for z in "rwx"
+                    if (mode & stat_bit(value, z)))))
         else:
-            os.chmod(path, mode)
-            return True
+            mask = ors((stat_bit(person, z) for z in value))
+        if op == "=":
+            mode &= ~ ors((stat_bit(person, z) for z in  "rwx"))
+        mode = (mode & ~mask) if (op == "-") else (mode | mask)
 
+    if mode == modeold:
+        return False
+    else:
+        os.chmod(path, mode)
+        return True
+
+chmod.regex = None
 
 # Helper functions
 
@@ -132,5 +131,4 @@ def test_code():
        print("%s --> %s" % (desc, get_mode_by_ls(loc)))
 
 if __name__ == "__main__":
-    #test_code()
-    verify_chmod('a+g')
+    test_code()
