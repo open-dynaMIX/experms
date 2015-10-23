@@ -33,7 +33,7 @@ def main():
         debug_message()
 
     config = configfile.main.Check(args.debug)
-    start_pyinotify(config.path, args.debug)
+    start_pyinotify(config, args.debug)
 
     sys.exit(0)
 

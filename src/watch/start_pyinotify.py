@@ -13,7 +13,7 @@ except ImportError:
     sys.exit(1)
 
 
-def start_pyinotify(directories, debug):
+def start_pyinotify(config, debug):
     """
     Start pyinotify
     """
@@ -23,13 +23,13 @@ def start_pyinotify(directories, debug):
 
     # watch manager
     wm = pyinotify.WatchManager()
-    notifier = pyinotify.ThreadedNotifier(wm, EventHandler(debug))
+    notifier = pyinotify.ThreadedNotifier(wm, EventHandler(config, debug))
 
     # Start the notifier from a new thread, without doing anything as no
     # directory or file is currently monitored yet.
     notifier.start()
     # Start watching the paths
-    wdd = wm.add_watch(directories, mask, rec=True, auto_add=True)
+    wdd = wm.add_watch(config.path, mask, rec=True, auto_add=True)
 
     try:
         while True:
