@@ -21,11 +21,6 @@ along with Experms.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
-# bold: "\033[1m"
-# green: "\033[32;1m"
-# red: "\033[31;1m"
-# normal: "\033[0m"
-
 import sys
 import os
 import ConfigParser
@@ -34,9 +29,7 @@ from configfile.check_restore import check_restore
 from configfile.check_path import check_path
 from configfile.check_ownerandgroup import check_ownerandgroup
 from configfile.check_chmod import check_chmod
-#from pwd import getpwnam, getpwuid
-#from grp import getgrnam, getgrgid
-#from re import compile as re_compile
+from configfile.check_excludepath import check_excludepath
 
 
 class Check(object):
@@ -50,11 +43,10 @@ class Check(object):
     self.group = ['grp1','grp2','grp3']
     self.chmodf = ['oct1','oct2','oct3']
     self.chmodd = ['oct1','oct2','oct3']
-    self.excludedir = ['excludedir1','excludedir2','excludedir3']
-    self.excludepattern = ['regex1','regex2','regex3']
+    self.excludepath = ['excludepath1','excludepath2','excludepath3']
+    self.excluderegex = ['regex1','regex2','regex3']
     """
     def __init__(self, debug):
-
         self.debug = debug
 
         # default values for the section general
@@ -68,46 +60,50 @@ class Check(object):
         self.group = []
         self.chmodf = []
         self.chmodd = []
-        self.excludedir = []
-        self.excludepattern = []
+        self.excludepath = []
+        self.excluderegex = []
 
         #prepare the error variable
         self.errorsoccured = False
 
-        # check for the existence of a config-file
+        configfile = self.find_configfile()
+
+        parser = self.parse_configfile(configfile)
+        self.call_checks(parser)
+
+
+    def find_configfile(self):
         if os.path.isfile('/etc/experms.conf'):
-            self.configfile = '/etc/experms.conf'
+            configfile = '/etc/experms.conf'
         elif os.path.isfile(sys.path[0] + '/experms.conf'):
-            self.configfile = sys.path[0] + '/experms.conf'
-        elif os.path.isfile(sys.path[0] + '/experms.conf'):
-            self.configfile = sys.path[0] + '/experms.conf'
+            configfile = sys.path[0] + '/experms.conf'
         else:
             print >> sys.stderr, ("\033[31;1mError: No configuration-file "
                                   "(/etc/experms.conf) was found.\033[0m")
             sys.exit(1)
-        if debug:
+        if self.debug:
             print >> sys.stderr, ("[debug] Using configuration-file '%s'"
-                                  % (self.configfile))
+                                  % (configfile))
+        return configfile
 
-        self.parser = self.parse_file()
-        self.use_checks()
 
-    def parse_file(self):
+    def parse_configfile(self, configfile):
         parser = ConfigParser.SafeConfigParser()
         try:
-            parser.read(self.configfile)
+            parser.read(configfile)
         except ConfigParser.MissingSectionHeaderError:
             pass
         return parser
 
-    def use_checks(self):
-        if self.parser.has_section('general'):
-            self.logit = check_printlog(self.parser, self.logitdefault,
+
+    def check_general(self, parser):
+        if parser.has_section('general'):
+            self.logit = check_printlog(parser, self.logitdefault,
                                         self.debug)
             if self.logit == None:
                 self.errorsoccured = True
 
-            self.restore = check_restore(self.parser, self.restoredefault,
+            self.restore = check_restore(parser, self.restoredefault,
                                          self.debug)
             if self.restore == None:
                 self.errorsoccured = True
@@ -116,45 +112,63 @@ class Check(object):
             self.logit = self.logitdefault
 
 
+    def check_sections(self, parser):
         sectionfound = False
-        for section in self.parser.sections():
+        for section in parser.sections():
             if section == 'general':
                 continue
             sectionfound = True
 
             self.sectionname.append(section)
 
-            temppath = check_path(self.parser, section, self.debug)
+            temppath = check_path(parser, section, self.debug)
             if not temppath:
                 self.errorsoccured = True
             else:
                 self.path.append(temppath)
 
-            tempowner = check_ownerandgroup(self.parser, section, 'owner', self.debug)
+            tempowner = check_ownerandgroup(parser, section, 'owner', self.debug)
             if tempowner == False:
                 self.errorsoccured = True
             else:
                 self.owner.append(tempowner)
 
-            tempgroup = check_ownerandgroup(self.parser, section, 'group', self.debug)
+            tempgroup = check_ownerandgroup(parser, section, 'group', self.debug)
             if tempgroup == False:
                 self.errorsoccured = True
             else:
                 self.group.append(tempgroup)
 
-            tempchmodf = check_chmod(self.parser, section, 'chmodf', self.debug)
+            tempchmodf = check_chmod(parser, section, 'chmodf', self.debug)
             if tempgroup == False:
                 self.errorsoccured = True
             else:
                 self.chmodf.append(tempchmodf)
 
-            tempchmodd = check_chmod(self.parser, section, 'chmodd', self.debug)
+            tempchmodd = check_chmod(parser, section, 'chmodd', self.debug)
             if tempgroup == False:
                 self.errorsoccured = True
             else:
                 self.chmodd.append(tempchmodd)
 
-        if not sectionfound:
+            tempexcludepath = check_excludepath(parser, section, self.path[-1], self.debug)
+            excludepatherror = False
+            for location in tempexcludepath:
+                if not location:
+                    excludepatherror = True
+            if excludepatherror:
+                self.errorsoccured = True
+            else:
+                self.excludepath.append(tempexcludepath)
+
+
+        return sectionfound
+
+
+    def call_checks(self, parser):
+        self.check_general(parser)
+
+        if not self.check_sections(parser):
             print >> sys.stderr, ("Error: No directory-section "
                                   "was found.\nIf you have started experms"
                                   " for the first time, please edit the "
