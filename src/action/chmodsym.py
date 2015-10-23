@@ -2,7 +2,7 @@
 
 """  module chmodsym.py (linux)
 
-This module defines a function chmod(location, description)
+This module defines a function chmod(path, description)
 which allows to change a file's permission with a symbolic
 description of the mode, similar to the shell command 'chmod'.
 
@@ -14,35 +14,9 @@ import functools
 import operator
 import re
 
-def isint(description):
-    try:
-        int(description)
-    except ValueError:
-        return False
-    else:
-        return True
 
-def verify_chmod(description):
-    if isint(description):
-        try:
-            int(description, 8)
-        except ValueError:
-            return False
-        else:
-            if len(description) < 3 or len(description) > 4:
-                return False
-            else:
-                return True
-    else:
-        p = re.compile(r"^([ugo]*|[a]?)([+\-=])([ugo]|[rwx]*)$")
-        if p.match(description):
-            return True
-        else:
-            return False
-
-
-def chmod(location, description):
-    """chmod(location, description) --> None
+def chmod(path, actperms, description):
+    """chmod(path, description) --> None
     Change the access permissions of file, using a symbolic description
     of the mode, similar to the format of the shell command chmod.
     The format of description is
@@ -57,25 +31,60 @@ def chmod(location, description):
                                 # the group.
     See also the man page of chmod.
     """
+
+    if not description:
+        return False
+
+    if isint(description):
+        if handle_octal(path, actperms, description):
+            return True
+        else:
+            return False
+    else:
+        if handle_symbolic(path, actperms, description):
+            return True
+        else:
+            return False
+
+chmod.regex = None
+
+
+
+def handle_octal(path, actperms, description):
+    if len(description) == 3:
+        description = '0' + description
+    if description == oct(actperms[2] & 0777):
+        return False
+    else:
+        os.chmod(path, int(description, 8))
+        return True
+
+def handle_symbolic(path, actperms, description):
     if chmod.regex is None:
         chmod.regex = re.compile(r"^(?P<who>[ugo]*|[a]?)(?P<op>[+\-=])"
                                   "(?P<value>[ugo]|[rwx]*)$")
-    mo = chmod.regex.match(description)
-    who, op, value = mo.group("who"), mo.group("op"), mo.group("value")
-    if not who:
-        who = "a"
-    for person in who:
-        mode = os.stat(location)[stat.ST_MODE]
-        if value in ("o", "g", "u"):
-            mask = ors((stat_bit(person, z) for z in "rwx" if (mode & stat_bit(value, z))))
-        else:
-            mask = ors((stat_bit(person, z) for z in value))
-        if op == "=":
-            mode &= ~ ors((stat_bit(person, z) for z in  "rwx"))
-        mode = (mode & ~mask) if (op == "-") else (mode | mask)
-        os.chmod(location, mode)
+        mo = chmod.regex.match(description)
+        who, op, value = mo.group("who"), mo.group("op"), mo.group("value")
+        if not who:
+            who = "a"
+        mode = actperms[2]
+        modeold = mode
+        for person in who:
+            if value in ("o", "g", "u"):
+                mask = (ors((stat_bit(person, z) for z in "rwx"
+                        if (mode & stat_bit(value, z)))))
+            else:
+                mask = ors((stat_bit(person, z) for z in value))
+            if op == "=":
+                mode &= ~ ors((stat_bit(person, z) for z in  "rwx"))
+            mode = (mode & ~mask) if (op == "-") else (mode | mask)
 
-chmod.regex = None
+        if mode == modeold:
+            return False
+        else:
+            os.chmod(path, mode)
+            return True
+
 
 # Helper functions
 
@@ -86,8 +95,19 @@ def stat_bit(who, letter):
 
 stat_bit.prefix = dict(u = "USR", g = "GRP", o = "OTH")
 
+
 def ors(sequence, initial = 0):
     return functools.reduce(operator.__or__, sequence, initial)
+
+
+def isint(description):
+    try:
+        int(description)
+    except ValueError:
+        return False
+    else:
+        return True
+
 
 # Test code
 
@@ -95,12 +115,12 @@ def test_code():
 
     import subprocess as sp
 
-    def touch(location):
-       sp.Popen("touch %s" % location, shell=True).wait()
+    def touch(path):
+       sp.Popen("touch %s" % path, shell=True).wait()
 
-    def get_mode_by_ls(location):
+    def get_mode_by_ls(path):
        """Run ls and return a string like '-r--r--r-' giving the mode."""
-       popen = sp.Popen(["ls", "-l", location], stdout=sp.PIPE)
+       popen = sp.Popen(["ls", "-l", path], stdout=sp.PIPE)
        sout, serr = popen.communicate()
        return sout[:10]
 

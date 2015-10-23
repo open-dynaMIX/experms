@@ -2,7 +2,8 @@
 
 
 import sys
-from action.chmodsym import verify_chmod
+import re
+
 
 def check_chmod(parser, section, what, debug):
     if parser.has_option(section, what):
@@ -25,3 +26,29 @@ def check_chmod(parser, section, what, debug):
     return chmod
 
 
+def verify_chmod(description):
+    if isint(description):
+        try:
+            int(description, 8)
+        except ValueError:
+            return False
+        else:
+            if len(description) < 3 or len(description) > 4:
+                return False
+            else:
+                return True
+    else:
+        p = re.compile(r"^([ugo]*|[a]?)([+\-=])([ugo]|[rwx]*)$")
+        if p.match(description):
+            return True
+        else:
+            return False
+
+
+def isint(description):
+    try:
+        int(description)
+    except ValueError:
+        return False
+    else:
+        return True

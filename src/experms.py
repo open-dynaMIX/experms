@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 from parse_arguments import parse_arguments
 import configfile.main
 from watch.start_pyinotify import start_pyinotify
@@ -19,6 +20,11 @@ def main():
     print "Experms v" + version
     if args.version:
         sys.exit(0)
+
+    if not os.geteuid() == 0:
+        print >> sys.stderr, ("You need to run experms with root privileges."
+                              "\nAborting.")
+        sys.exit(1)
 
     if args.restore:
         if args.debug:

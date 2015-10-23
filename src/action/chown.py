@@ -3,7 +3,7 @@
 import os
 
 
-def chown(path, actperms, config, ruledir, debug):
+def chown(path, actperms, config, ruledir):
     if config.owner[ruledir] in [actperms[0], None]:
         newowner = -1
     else:
