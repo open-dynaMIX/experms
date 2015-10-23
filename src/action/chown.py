@@ -15,7 +15,13 @@ def chown(path, actperms, config, ruledir):
         newgroup = config.group[ruledir]
 
     if not (newowner, newgroup) == (-1, -1):
-        os.lchown(path, newowner, newgroup)
-        return True
+        try:
+            os.lchown(path, newowner, newgroup)
+        except OSError, e:
+            if e.errno == 2:
+                # this means the file/directory doesn't exist anymore
+                return False
+        else:
+            return True
 
     return False

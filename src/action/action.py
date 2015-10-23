@@ -14,7 +14,7 @@ def get_actperms(path):
     except OSError, e:
         if e.errno == 2:
             # this means the file/directory doesn't exist anymore
-            return
+            return None
     actperms = ([actpermsraw.st_uid, actpermsraw.st_gid,
                  actpermsraw.st_mode])
     return actperms
@@ -22,6 +22,9 @@ def get_actperms(path):
 
 def main(path, event, isdir, config, ruledir, debug):
     actperms = get_actperms(path)
+
+    if not actperms:
+        return
 
     somethinghappened = False
 

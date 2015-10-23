@@ -54,8 +54,14 @@ def handle_octal(path, actperms, description):
     if description == oct(actperms[2] & 0777):
         return False
     else:
-        os.chmod(path, int(description, 8))
-        return True
+        try:
+            os.chmod(path, int(description, 8))
+        except OSError, e:
+            if e.errno == 2:
+                # this means the file/directory doesn't exist anymore
+                return False
+        else:
+            return True
 
 def handle_symbolic(path, actperms, description):
     if chmod.regex is None:
@@ -80,8 +86,14 @@ def handle_symbolic(path, actperms, description):
     if mode == modeold:
         return False
     else:
-        os.chmod(path, mode)
-        return True
+        try:
+            os.chmod(path, mode)
+        except OSError, e:
+            if e.errno == 2:
+                # this means the file/directory doesn't exist anymore
+                return False
+        else:
+            return True
 
 chmod.regex = None
 
