@@ -101,7 +101,8 @@ chmod.regex = None
 
 def stat_bit(who, letter):
     if who == "a":
-        return stat_bit("o", letter) | stat_bit("g", letter) | stat_bit("u", letter)
+        return (stat_bit("o", letter) | stat_bit("g", letter) |
+                stat_bit("u", letter))
     return getattr(stat, "S_I%s%s" % (letter.upper(), stat_bit.prefix[who]))
 
 stat_bit.prefix = dict(u = "USR", g = "GRP", o = "OTH")
