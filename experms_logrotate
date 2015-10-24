@@ -1,9 +1,0 @@
-"/var/log/experms.log" /var/log/experms.err {
-        weekly
-        missingok
-        rotate 4
-        compress
-        delaycompress
-        notifempty
-        nocreate
-}
