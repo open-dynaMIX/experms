@@ -19,7 +19,7 @@ def main():
     if not os.geteuid() == 0:
         print >> sys.stderr, ("You need to run experms with root privileges."
                               "\nAborting.")
-    sys.exit(1)
+        sys.exit(1)
 
     args = parse_arguments()
 
