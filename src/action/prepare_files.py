@@ -7,6 +7,18 @@ import re
 from action import main as action
 
 
+def is_excluded(path, excludepath, excluderegex):
+    for excl in excludepath:
+        if path.startswith(excl):
+            return True
+
+    if excluderegex:
+        p = re.compile(excluderegex)
+        if p.search(os.path.basename(path)):
+            return True
+
+    print False
+
 
 def prepare(path, event, isdir, config, debug):
     """
@@ -23,7 +35,7 @@ def prepare(path, event, isdir, config, debug):
                               % (time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime()),
                               "%.20f" % time.time(), event, logpath))
 
-
+    ruledir = None
     dirhighest = 0
     for nr, item in enumerate(config.path):
         tempdirhighest = 0
@@ -37,35 +49,10 @@ def prepare(path, event, isdir, config, debug):
             if thing == item.split('/')[count]:
                 tempdirhighest = tempdirhighest + 1
         if tempdirhighest > dirhighest:
-            dirhighest = tempdirhighest
-            ruledir = nr
+            if not is_excluded(path, config.excludepath[nr], config.excluderegex[nr]):
+                dirhighest = tempdirhighest
+                ruledir = nr
 
-    # check if the file is excluded or what rules have to take effect
-    if not config.excluderegex[ruledir] == None:
-        if not isdir:
-            p = re.compile(config.excluderegex[ruledir])
-            if p.search(os.path.basename(path)):
-                return
-    if config.excludepath[ruledir] == None:
-        highest = 0
-    else:
-        highest = 0
-        for item in config.excludepath[ruledir]:
-            if not item in path:
-                continue
-            temphighest = 0
-            for ruledir, thing in enumerate(path.split('/')):
-                try:
-                    item.split('/')[ruledir]
-                except IndexError:
-                    break
-                if thing == item.split('/')[ruledir]:
-                    temphighest = temphighest + 1
-            if temphighest > highest:
-                highest = temphighest
-
-    if highest > dirhighest:
-        return
-
-    action(path, event, isdir, config, ruledir, debug)
+    if ruledir:
+        action(path, event, isdir, config, ruledir, debug)
 
