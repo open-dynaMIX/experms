@@ -7,6 +7,7 @@ from parse_arguments import parse_arguments
 import configfile.main
 from watch.start_pyinotify import start_pyinotify
 from restore.main import restore
+from restore.collect_filenames import collect
 
 
 # global variables
@@ -33,11 +34,19 @@ def main():
             debug_message()
         config = configfile.main.Check(args.debug)
         restore(config, args.debug)
-
         sys.exit(0)
 
     if args.count:
-        pass
+        if args.debug:
+            debug_message()
+        config = configfile.main.Check(args.debug)
+        print ("Directories configured for watching:\n%s"
+               % len(collect(config)[0]))
+        with open('/proc/sys/fs/inotify/max_user_watches', 'r') as inotifyconf:
+            inotifyconfig = inotifyconf.read().strip()
+        print ("Directories allowed to watch with inotify:\n%s"
+               % inotifyconfig)
+        sys.exit(0)
 
     if args.debug:
         debug_message()
