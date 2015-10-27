@@ -1,3 +1,4 @@
+experms
 version 0.1.0 - 2015
 
 Distributed under the GNU GPL
@@ -68,7 +69,7 @@ Note: You need to edit the configuration file before running experms the first
 experms.conf is located under /etc/experms.conf.
 
 If changes happened to experms.conf, it is necessary to restart
-experms: 'experms restart'.
+experms.
 
 =========
 EXAMPLE:
