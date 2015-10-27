@@ -17,7 +17,7 @@ def is_excluded(path, excludepath, excluderegex):
         if p.search(os.path.basename(path)):
             return True
 
-    print False
+    return False
 
 
 def prepare(path, event, isdir, config, debug):
@@ -39,7 +39,7 @@ def prepare(path, event, isdir, config, debug):
     dirhighest = 0
     for nr, item in enumerate(config.path):
         tempdirhighest = 0
-        if not item in path:
+        if not path.startswith(item):
             continue
         for count, thing in enumerate(path.split('/')):
             try:
@@ -53,6 +53,6 @@ def prepare(path, event, isdir, config, debug):
                 dirhighest = tempdirhighest
                 ruledir = nr
 
-    if ruledir:
+    if not ruledir == None:
         action(path, event, isdir, config, ruledir, debug)
 
