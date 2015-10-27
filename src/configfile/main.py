@@ -120,6 +120,7 @@ class Check(object):
 
             temppath = check_path(parser, section, self.debug)
             if not temppath:
+                self.path.append(None)
                 self.errorsoccured = True
             else:
                 self.path.append(temppath)
