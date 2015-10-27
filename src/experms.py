@@ -3,6 +3,7 @@
 
 import sys
 import os
+from procname import set_procname
 from parse_arguments import parse_arguments
 import configfile.main
 from watch.start_pyinotify import start_pyinotify
@@ -22,6 +23,8 @@ def main():
         print >> sys.stderr, ("You need to run experms with root privileges."
                               "\nAborting.")
         sys.exit(1)
+
+    set_procname("experms")
 
     args = parse_arguments()
 
