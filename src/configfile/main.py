@@ -56,8 +56,8 @@ class Check(object):
     def find_configfile(self):
         if os.path.isfile('/etc/experms.conf'):
             configfile = '/etc/experms.conf'
-        elif os.path.isfile(sys.path[0] + '/../experms.conf'):
-            configfile = sys.path[0] + '/../experms.conf'
+        elif os.path.isfile(sys.path[0] + '/experms.conf'):
+            configfile = sys.path[0] + '/experms.conf'
         else:
             print >> sys.stderr, ("\033[31;1mError: No configuration-file "
                                   "(/etc/experms.conf) was found.\033[0m")
