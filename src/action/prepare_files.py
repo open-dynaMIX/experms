@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import os
 import time
 import re
 from action import main as action
@@ -14,7 +13,7 @@ def is_excluded(path, excludepath, excluderegex):
 
     if excluderegex:
         p = re.compile(excluderegex)
-        if p.search(os.path.basename(path)):
+        if p.search(path):
             return True
 
     return False
