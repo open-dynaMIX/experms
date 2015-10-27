@@ -30,10 +30,11 @@ def prepare(path, event, isdir, config, debug):
             logpath = path + "/"
         else:
             logpath = path
-        print >> sys.stderr, ("[debug] %s %s event to process: %s, %s"
-                              % (time.strftime("%Y-%m-%d_%H:%M:%S",
-                              time.localtime()), "%.20f" % time.time(),
-                              event, logpath))
+        if not event == "RESTORE":
+            print >> sys.stderr, ("[debug] %s %s event to process: %s, %s"
+                                  % (time.strftime("%Y-%m-%d_%H:%M:%S",
+                                  time.localtime()), "%.20f" % time.time(),
+                                  event, logpath))
 
     ruledir = None
     dirhighest = 0

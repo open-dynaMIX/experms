@@ -32,7 +32,7 @@ def start_pyinotify(config, debug):
     wdd = wm.add_watch(config.path, mask, rec=True, auto_add=True)
 
     if debug:
-        print >> sys.stderr, ("[debug] Start to watch files.")
+        print >> sys.stderr, ("[debug] Start to watch files")
 
     try:
         while True:

@@ -55,6 +55,12 @@ def main():
         debug_message()
 
     config = configfile.main.Check(args.debug)
+
+    if config.restore:
+        if args.debug:
+            print >> sys.stderr, ("[debug] Starting restore")
+        restore(config, args.debug)
+
     start_pyinotify(config, args.debug)
 
     sys.exit(0)
