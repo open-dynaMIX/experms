@@ -32,8 +32,9 @@ def prepare(path, event, isdir, config, debug):
         else:
             logpath = path
         print >> sys.stderr, ("[debug] %s %s event to process: %s, %s"
-                              % (time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime()),
-                              "%.20f" % time.time(), event, logpath))
+                              % (time.strftime("%Y-%m-%d_%H:%M:%S",
+                              time.localtime()), "%.20f" % time.time(),
+                              event, logpath))
 
     ruledir = None
     dirhighest = 0
@@ -49,7 +50,8 @@ def prepare(path, event, isdir, config, debug):
             if thing == item.split('/')[count]:
                 tempdirhighest = tempdirhighest + 1
         if tempdirhighest > dirhighest:
-            if not is_excluded(path, config.excludepath[nr], config.excluderegex[nr]):
+            if not is_excluded(path, config.excludepath[nr],
+                               config.excluderegex[nr]):
                 dirhighest = tempdirhighest
                 ruledir = nr
 
