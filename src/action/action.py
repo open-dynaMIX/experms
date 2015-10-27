@@ -34,15 +34,16 @@ def main(path, event, isdir, config, ruledir, debug):
             print >> sys.stderr, ("[debug] Section '%s': changed owner of "
                                   "'%s'" % (config.section[ruledir], path))
 
-    if isdir:
-        chmodmode = config.chmodd[ruledir]
-    else:
-        chmodmode = config.chmodf[ruledir]
-    if chmod(path, actperms, chmodmode):
-        somethinghappened = True
-        if debug:
-            print >> sys.stderr, ("[debug] Section '%s': changed permissions "
-                                  "of '%s'" % (config.section[ruledir], path))
+    if not os.path.islink(path):
+        if isdir:
+            chmodmode = config.chmodd[ruledir]
+        else:
+            chmodmode = config.chmodf[ruledir]
+        if chmod(path, actperms, chmodmode):
+            somethinghappened = True
+            if debug:
+                print >> sys.stderr, ("[debug] Section '%s': changed permissions "
+                                      "of '%s'" % (config.section[ruledir], path))
 
 
     if somethinghappened:
