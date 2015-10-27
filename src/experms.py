@@ -6,6 +6,7 @@ import os
 from parse_arguments import parse_arguments
 import configfile.main
 from watch.start_pyinotify import start_pyinotify
+from restore.main import restore
 
 
 # global variables
@@ -31,6 +32,8 @@ def main():
         if args.debug:
             debug_message()
         config = configfile.main.Check(args.debug)
+        restore(config, args.debug)
+
         sys.exit(0)
 
     if args.count:
