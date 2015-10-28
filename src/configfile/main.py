@@ -128,6 +128,7 @@ class Check(object):
             tempowner = check_ownerandgroup(parser, section, 'owner',
                                             self.debug)
             if tempowner == False:
+                self.owner.append(None)
                 self.errorsoccured = True
             else:
                 self.owner.append(tempowner)
@@ -135,18 +136,21 @@ class Check(object):
             tempgroup = check_ownerandgroup(parser, section, 'group',
                                             self.debug)
             if tempgroup == False:
+                self.group.append(None)
                 self.errorsoccured = True
             else:
                 self.group.append(tempgroup)
 
             tempchmodf = check_chmod(parser, section, 'chmodf', self.debug)
             if tempchmodf == False:
+                self.chmodf.append(None)
                 self.errorsoccured = True
             else:
                 self.chmodf.append(tempchmodf)
 
             tempchmodd = check_chmod(parser, section, 'chmodd', self.debug)
             if tempchmodd == False:
+                self.chmodd.append(None)
                 self.errorsoccured = True
             else:
                 self.chmodd.append(tempchmodd)
@@ -158,12 +162,14 @@ class Check(object):
                 if not location:
                     excludepatherror = True
             if excludepatherror:
+                self.excludepath.append(None)
                 self.errorsoccured = True
             else:
                 self.excludepath.append(tempexcludepath)
 
             tempexcluderegex = check_excluderegex(parser, section, self.debug)
             if tempexcluderegex == False:
+                self.excluderegex.append(None)
                 self.errorsoccured = True
             else:
                 self.excluderegex.append(tempexcluderegex)
