@@ -16,25 +16,25 @@ def check_excludepath(parser, section, path, debug):
             else:
                 if not os.path.isdir(item) and not os.path.isfile(item):
                     print >> sys.stderr, ("Error in section '%s': "
-                                          "'excludepath' '%s' doesn't exist."
+                                          "'excludepath' '%s' doesn't exist"
                                           % (section, item))
                     excludepath.append(False)
                 else:
                     excludepath.append(item)
                     if debug:
                         print >> sys.stderr, ("[debug] Excludedir '%s' in "
-                                              "section '%s' is valid."
+                                              "section '%s' is valid"
                                               % (item, section))
 
         if path in excludepath:
             excludepath = [False]
             print >> sys.stderr, ("Error in section '%s': 'path' is in "
-                                  "'excludepath'." % (section))
+                                  "'excludepath'" % (section))
 
     if debug:
         if excludepath == []:
             print >> sys.stderr, ("[debug] 'excludepath' in section '%s' "
-                                  "is not set." % section)
+                                  "is not set" % section)
 
     return excludepath
 

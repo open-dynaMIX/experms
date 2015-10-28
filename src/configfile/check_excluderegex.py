@@ -18,19 +18,19 @@ def check_excluderegex(parser, section, debug):
             except:
                 print >> sys.stderr, ("Error in section '%s': "
                                       "'excluderegex' must be a regular "
-                                      "expression." % section)
+                                      "expression" % section)
                 excluderegex = False
             else:
                 excluderegex = tempexcluderegex
                 if debug:
                     print >> sys.stderr, ("[debug] 'excluderegex' in "
-                                          "section '%s' is valid." % section)
+                                          "section '%s' is valid" % section)
     else:
         excluderegex = None
 
     if excluderegex in [None, '']:
         if debug:
             print >> sys.stderr, ("[debug] 'excluderegex' in section '%s' "
-                                  "is not set." % section)
+                                  "is not set" % section)
 
     return excluderegex

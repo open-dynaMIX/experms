@@ -64,7 +64,7 @@ class Check(object):
             sys.exit(1)
         if self.debug:
             print >> sys.stderr, ("[debug] Using configuration-file '%s'"
-                                  % (os.path.abspath(configfile)))
+                                  % configfile)
         return configfile
 
 

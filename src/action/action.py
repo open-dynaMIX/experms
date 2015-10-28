@@ -50,6 +50,6 @@ def main(path, event, isdir, config, ruledir, debug):
         if config.logit:
             if isdir:
                 path = path + "/"
-            print ("%s Section: %s Event: %s %s"
-                   % (time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime()),
-                   config.section[ruledir], event, path))
+            print ("Section: %s Event: %s %s" % (config.section[ruledir],
+                   event, path))
+            sys.stdout.flush()
