@@ -140,13 +140,13 @@ class Check(object):
                 self.group.append(tempgroup)
 
             tempchmodf = check_chmod(parser, section, 'chmodf', self.debug)
-            if tempgroup == False:
+            if tempchmodf == False:
                 self.errorsoccured = True
             else:
                 self.chmodf.append(tempchmodf)
 
             tempchmodd = check_chmod(parser, section, 'chmodd', self.debug)
-            if tempgroup == False:
+            if tempchmodd == False:
                 self.errorsoccured = True
             else:
                 self.chmodd.append(tempchmodd)
