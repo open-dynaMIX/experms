@@ -2,7 +2,6 @@
 
 import sys
 import os
-import time
 from chown import chown
 from chmodsym import chmod
 
