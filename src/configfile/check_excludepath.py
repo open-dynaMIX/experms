@@ -14,10 +14,10 @@ def check_excludepath(parser, section, path, debug):
             if item == '':
                 continue
             else:
-                if not os.path.isdir(item) and not os.path.isfile(item):
+                if not item.startswith(path):
                     print >> sys.stderr, ("Error in section '%s': "
-                                          "'excludepath' '%s' doesn't exist"
-                                          % (section, item))
+                                          "'excludepath' must be inside 'path'"
+                                          % section)
                     excludepath.append(False)
                 else:
                     excludepath.append(item)
