@@ -49,7 +49,7 @@ You can start and/or enable experms with systemd:
 # systemctl start experms
 # systemctl enable experms
 
-If you run it directly (e.g. in screen), following arguments are available:
+Following arguments are available:
 
 usage: experms [-h] [-r] [-c] [-v] [-d]
 
@@ -104,13 +104,17 @@ group = second-group
 chmodf = 0644
 excludepattern = .txt|.TXT|.sh|.SH
 
+[directory_3]
+path = /second/directory/subdirectory
+group = third\-group
+chmodf = g+w
+chmodd = o-rx
+
 =================
 GENERAL SECTION:
 =================
 log_activities = yes | no
-   Decide, if experms should write a log-file. If yes, the log will be
-   stored in the directory, where experms lies. It also can be
-   accessed with 'experms log'.
+   Decide, if experms should print a log.
 
 restore = yes | no
    Decide, if experms should restore all the ownerships and permissions
@@ -129,10 +133,10 @@ DIRECTORY SECTION:
 path = /path/to/watch/dir
    Set the directory where your rules should apply.
 
-owner = username
+owner = username|UID
    Set the owner of all the files and directories.
 
-group = groupname
+group = groupname|GID
    Set the group of all the files and directories.
 
 chmodf = permissions
@@ -160,8 +164,8 @@ experms uses inotify to monitor the directories.
 Inotify allows only a limited number of directories to watch per user.
 Per default this is set to 8192.
 You can increase this number by writing to /proc/sys/fs/inotify/max_user_watches
-To make this change permanent, the following line should be added to /etc/sysctl.conf
-or /etc/sysctl.d/99-sysctl.conf
+To make this change permanent, the following line should be added to
+/etc/sysctl.conf or /etc/sysctl.d/99-sysctl.conf
 fs.inotify.max_user_watches=8192 (your amount of directories)
 
 You can check the amount of directories recursively with:
