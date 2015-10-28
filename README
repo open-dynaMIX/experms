@@ -17,9 +17,7 @@ CONTENT:
    - GENERAL SECTION
    - DEFAULT SECTION
    - DIRECTORY SECTION
- - RUNNING EXPERMS AS NON-ROOT USER
  - INOTIFY CONFIGURATION
- - FILES
 
 
 ===============================================================================
@@ -47,6 +45,12 @@ experms depends on:
 ===============================================================================
  ++ USAGE ++
 ===============================================================================
+You can start and/or enable experms with systemd:
+# systemctl start experms
+# systemctl enable experms
+
+If you run it directly (e.g. in screen), following arguments are available:
+
 usage: experms [-h] [-d] [-r] [-v] [-c]
 
 experms
