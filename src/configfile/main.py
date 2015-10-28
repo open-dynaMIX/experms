@@ -183,13 +183,10 @@ class Check(object):
 
 
     def check_final(self):
-        try:
-            for setting in [self.owner[-1], self.group[-1], self.chmodf[-1],
-                            self.chmodd[-1]]:
-                dosomething = False
-                if setting:
-                    dosomething = True
-        except IndexError:
-            dosomething = True
+        dosomething = False
+        for setting in [self.owner[-1], self.group[-1], self.chmodf[-1],
+                        self.chmodd[-1]]:
+            if setting:
+                dosomething = True
 
         return dosomething
