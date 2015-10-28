@@ -71,7 +71,6 @@ def main():
 
     sys.exit(0)
 
-    #handle(args.args)
 
 if __name__ == "__main__":
     main()
