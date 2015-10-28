@@ -28,6 +28,12 @@ def main():
 
     args = parse_arguments()
 
+    try:
+        if os.environ['SYSTEMD_LOG_LEVEL'] == "debug":
+            args.debug = True
+    except KeyError:
+        pass
+
     if args.version:
         print "Experms v" + version
         sys.exit(0)
