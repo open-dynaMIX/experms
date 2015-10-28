@@ -3,7 +3,7 @@ Description=experms
 
 [Service]
 Type=simple
-ExecStart=/home/fabio/Linux/python/experms/gitlab/experms/src/experms.py
+ExecStart=/usr/bin/experms
 
 [Install]
 WantedBy=multi-user.target
