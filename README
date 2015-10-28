@@ -51,16 +51,17 @@ You can start and/or enable experms with systemd:
 
 If you run it directly (e.g. in screen), following arguments are available:
 
-usage: experms [-h] [-d] [-r] [-v] [-c]
+usage: experms [-h] [-r] [-c] [-v] [-d]
 
 experms
 
 optional arguments:
   -h, --help     show this help message and exit
-  -d, --debug    Print debug-messages.
   -r, --restore  Just restore all the permissions and exit.
-  -v, --version  Print the version and exit.
   -c, --count    Count the directories to watch and exit.
+  -v, --version  Print the version and exit.
+  -d, --debug    Print debug-messages.
+
 
 
 Note: You need to edit the configuration file before running experms the first
