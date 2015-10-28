@@ -19,11 +19,11 @@ class Check(object):
     self.restore = boolean
     self.logit = boolean
     self.sectionname = ['section1','section2','section3']
-    self.dirname = ['dir1','dir2','dir3']
+    self.path = ['path1','path2','path3']
     self.owner = ['own1','own2','own3']
     self.group = ['grp1','grp2','grp3']
-    self.chmodf = ['oct1','oct2','oct3']
-    self.chmodd = ['oct1','oct2','oct3']
+    self.chmodf = ['perm1','perm2','perm3']
+    self.chmodd = ['perm1','perm2','perm3']
     self.excludepath = ['excludepath1','excludepath2','excludepath3']
     self.excluderegex = ['regex1','regex2','regex3']
     """
