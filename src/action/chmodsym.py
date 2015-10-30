@@ -35,7 +35,7 @@ def chmod(path, actperms, description):
     if not description:
         return False
 
-    if isint(description):
+    if isinstance(description, basestring):
         if handle_octal(path, actperms, description):
             return True
         else:
@@ -67,21 +67,22 @@ def handle_symbolic(path, actperms, description):
     if chmod.regex is None:
         chmod.regex = re.compile(r"^(?P<who>[ugo]*|[a]?)(?P<op>[+\-=])"
                                   "(?P<value>[ugo]|[rwx]*)$")
-    mo = chmod.regex.match(description)
-    who, op, value = mo.group("who"), mo.group("op"), mo.group("value")
-    if not who:
-        who = "a"
     mode = actperms[2]
     modeold = mode
-    for person in who:
-        if value in ("o", "g", "u"):
-            mask = (ors((stat_bit(person, z) for z in "rwx"
-                    if (mode & stat_bit(value, z)))))
-        else:
-            mask = ors((stat_bit(person, z) for z in value))
-        if op == "=":
-            mode &= ~ ors((stat_bit(person, z) for z in  "rwx"))
-        mode = (mode & ~mask) if (op == "-") else (mode | mask)
+    for desc in description:
+        mo = chmod.regex.match(desc)
+        who, op, value = mo.group("who"), mo.group("op"), mo.group("value")
+        if not who:
+            who = "a"
+        for person in who:
+            if value in ("o", "g", "u"):
+                mask = (ors((stat_bit(person, z) for z in "rwx"
+                        if (mode & stat_bit(value, z)))))
+            else:
+                mask = ors((stat_bit(person, z) for z in value))
+            if op == "=":
+                mode &= ~ ors((stat_bit(person, z) for z in  "rwx"))
+            mode = (mode & ~mask) if (op == "-") else (mode | mask)
 
     if mode == modeold:
         return False
@@ -110,15 +111,6 @@ stat_bit.prefix = dict(u = "USR", g = "GRP", o = "OTH")
 
 def ors(sequence, initial = 0):
     return functools.reduce(operator.__or__, sequence, initial)
-
-
-def isint(description):
-    try:
-        int(description)
-    except ValueError:
-        return False
-    else:
-        return True
 
 
 # Test code

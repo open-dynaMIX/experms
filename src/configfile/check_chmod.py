@@ -8,8 +8,8 @@ import re
 def check_chmod(parser, section, what, debug):
     if parser.has_option(section, what):
         tempchmod = parser.get(section, what)
-        if verify_chmod(tempchmod):
-            chmod = tempchmod
+        chmod = verify_chmod(tempchmod)
+        if chmod:
             if debug:
                 print >> sys.stderr, ("[debug] '%s' in section '%s' "
                                       "is valid" % (what, section))
@@ -36,11 +36,19 @@ def verify_chmod(description):
             if len(description) < 3 or len(description) > 4:
                 return False
             else:
-                return True
+                return description
     else:
-        p = re.compile(r"^([ugo]*|[a]?)([+\-=])([ugo]|[rwx]*)$")
-        if p.match(description):
-            return True
+        valid = True
+        symdesc = []
+        for sym in description.split(','):
+            sym = sym.strip()
+            p = re.compile(r"^([ugo]*|[a]?)([+\-=])([ugo]|[rwx]*)$")
+            if p.match(sym):
+                symdesc.append(sym)
+            else:
+                valid = False
+        if valid:
+            return symdesc
         else:
             return False
 
