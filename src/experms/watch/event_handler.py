@@ -2,7 +2,7 @@
 
 import pyinotify
 import os
-from action.prepare_files import prepare
+from experms.action.prepare_files import prepare
 
 class EventHandler(pyinotify.ProcessEvent):
     """
