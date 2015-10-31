@@ -2,7 +2,7 @@
 
 import sys
 import time
-from watch.event_handler import EventHandler
+from event_handler import EventHandler
 try:
     import pyinotify
 except ImportError:
