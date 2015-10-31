@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from collect_filenames import collect
-from experms.action.prepare_files import prepare
+from action.prepare_files import prepare
 
 
 def restore(config, debug):
