@@ -1,10 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-"""A setuptools based setup module.
-See:
-https://packaging.python.org/en/latest/distributing.html
-https://github.com/pypa/sampleproject
+"""
+setup.py for experms
 """
 
 # Always prefer setuptools over distutils
@@ -16,7 +14,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README'), encoding='utf-8') as f:
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
@@ -72,31 +70,11 @@ setup(
     # packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     packages=find_packages('src'),
 
-    # Alternatively, if you want to distribute just a my_module.py, uncomment
-    # this:
-    #   py_modules=["my_module"],
-
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=['pyinotify'],
-
-    # List additional groups of dependencies here (e.g. development
-    # dependencies). You can install these using the following syntax,
-    # for example:
-    # $ pip install -e .[dev,test]
-    # extras_require={
-    #     'dev': ['check-manifest'],
-    #     'test': ['coverage'],
-    # },
-
-    # If there are data files included in your packages that need to be
-    # installed, specify them here.  If using Python 2.6 or less, then these
-    # have to be included in MANIFEST.in as well.
-    # package_data={
-    #     'sample': ['package_data.dat'],
-    # },
 
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages. See:
@@ -117,20 +95,3 @@ setup(
         ],
     },
 )
-
-
-# from distutils.core import setup
-
-
-# setup(name='experms',
-#       version='0.1.0',
-#       description='File permission handler with inotify',
-#       author='Fabio Rämi',
-#       author_email='fabio[a]dynamix-tontechnik[dot]ch',
-#       url='https://github.com/open-dynaMIX/experms',
-#       packages=['experms'],
-#       data_files=[('/etc', ['experms.conf']),
-#                   ('/usr/lib/systemd/system', ['experms.service']),
-#                   ('/usr/share/man/man1', ['experms.1.gz']),
-#                   ('/usr/share/man/man5', ['experms.conf.5.gz'])]
-#      )
