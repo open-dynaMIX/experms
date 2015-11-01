@@ -21,6 +21,7 @@ experms needs to be run with root-permissions.
 experms depends on:
  - python2
  - python2-pyinotify (name can vary on different Linux distributions)
+ - systemd (optional)
 
 
 ##Usage
