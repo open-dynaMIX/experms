@@ -1,28 +1,11 @@
-experms
+#experms
 version 0.1.0 - 2015
 
 Distributed under the GNU GPL
 http://www.gnu.org/licenses/gpl-3.0.txt
 Or see the file ./COPYING
 
-
-==========
-CONTENT:
-==========
- - DESCRIPTION
- - DEPENDENCIES
- - USAGE
- - THE CONFIGURATION FILE
-   - EXAMPLE
-   - GENERAL SECTION
-   - DEFAULT SECTION
-   - DIRECTORY SECTION
- - INOTIFY CONFIGURATION
-
-
-===============================================================================
- ++ DESCRIPTION ++
-===============================================================================
+ ##Introduction
 Monitors file-changes happened in the directory set in experms.conf.
 If changes happened, it adjusts the file-permissions and ownership/group.
 You can either define one directory, or several sub-directories with different
@@ -33,18 +16,14 @@ based on the config-file.
 experms needs to be run with root-permissions.
 
 
-===============================================================================
- ++ DEPENDENCIES ++
-===============================================================================
+##Dependencies
 experms depends on:
 
  - python2
  - python2-pyinotify (name can vary on different Linux distributions)
 
 
-===============================================================================
- ++ USAGE ++
-===============================================================================
+##Usage
 You can start and/or enable experms with systemd:
 # systemctl start experms
 # systemctl enable experms
@@ -68,18 +47,14 @@ Note: You need to edit the configuration file before running experms the first
       time!
 
 
-===============================================================================
- ++ THE CONFIGURATION FILE ++
-===============================================================================
+##The Configuration File
 experms.conf is located under /etc/experms.conf.
 
 If changes happened to experms.conf, it is necessary to restart
 experms.
 
-=========
-EXAMPLE:
-=========
-#
+###Example
+`#
 # /etc/experms.conf
 #
 
@@ -109,10 +84,9 @@ path = /second/directory/subdirectory
 group = third\-group
 chmodf = g+w
 chmodd = o-rx
+`
 
-=================
-GENERAL SECTION:
-=================
+###General Section
 log_activities = yes | no
    Decide, if experms should print a log.
 
@@ -121,15 +95,11 @@ restore = yes | no
    of all files based on the config-file. In case there were changes
    while experms was not running.
 
-=================
-DEFAULT SECTION:
-=================
+###Default Section
 Rules that should apply to all directory sections. They can be over‐
 written inside a directory section.
 
-===================
-DIRECTORY SECTION:
-===================
+###Directory Section
 path = /path/to/watch/dir
    Set the directory where your rules should apply.
 
@@ -157,9 +127,7 @@ excludepattern = regular expression
    Exclude files (and only files) based on a pattern.
 
 
-===============================================================================
- ++ INOTIFY CONFIGURATION ++
-===============================================================================
+##Inotify Configuration
 experms uses inotify to monitor the directories.
 Inotify allows only a limited number of directories to watch per user.
 Per default this is set to 8192.
