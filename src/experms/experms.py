@@ -6,9 +6,9 @@ import os
 from procname import set_procname
 from parse_arguments import parse_arguments
 import configfile.main
-from watch.start_pyinotify import start_pyinotify
-from restore.main import restore
-from restore.collect_filenames import collect
+from start_pyinotify import start_pyinotify
+from restore import restore
+from collect_filenames import collect
 
 
 # global variables
