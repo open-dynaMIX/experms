@@ -84,8 +84,7 @@ class Check(object):
             print >> sys.stderr, ("Error: No directory-section "
                                   "was found.\nIf you have started experms"
                                   " for the first time, please edit the "
-                                  "configfile first (usually "
-                                  "/etc/experms.conf)")
+                                  "configfile first (/etc/experms.conf)")
             self.errorsoccured = True
 
         if self.errorsoccured:
