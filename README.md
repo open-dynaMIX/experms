@@ -1,11 +1,9 @@
 #experms
-version 0.1.0 - 2015
-
 Distributed under the GNU GPL
 http://www.gnu.org/licenses/gpl-3.0.txt
 Or see the file ./COPYING
 
- ##Introduction
+##Introduction
 Monitors file-changes happened in the directory set in experms.conf.
 If changes happened, it adjusts the file-permissions and ownership/group.
 You can either define one directory, or several sub-directories with different
@@ -30,6 +28,7 @@ You can start and/or enable experms with systemd:
 
 Following arguments are available:
 
+`
 usage: experms [-h] [-r] [-c] [-v] [-d]
 
 experms
@@ -54,7 +53,8 @@ If changes happened to experms.conf, it is necessary to restart
 experms.
 
 ###Example
-`#
+`
+#
 # /etc/experms.conf
 #
 
