@@ -24,9 +24,11 @@ experms depends on:
 
 
 ##Usage
-You can start and/or enable experms with systemd:
-`# systemctl start experms`
-`# systemctl enable experms`
+You can start and/or enable experms with systemd:  
+```
+# systemctl start experms
+# systemctl enable experms
+```
 
 Following arguments are available:
 
@@ -90,12 +92,12 @@ chmodd = o-rx
 
 ###General Section
 log_activities = yes | no  
-&nbsp;&nbsp;&nbsp;&nbsp;Decide, if experms should print a log.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decide, if experms should print a log.
 
 restore = yes | no  
-&nbsp;&nbsp;&nbsp;&nbsp;Decide, if experms should restore all the ownerships and permissions  
-&nbsp;&nbsp;&nbsp;&nbsp;of all files based on the config-file. In case there were changes  
-&nbsp;&nbsp;&nbsp;&nbsp;while experms was not running.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decide, if experms should restore all the ownerships and permissions  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of all files based on the config-file. In case there were changes  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while experms was not running.
 
 ###Default Section
 Rules that should apply to all directory sections. They can be over‐  
@@ -103,30 +105,30 @@ written inside a directory section.
 
 ###Directory Section
 path = /path/to/watch/dir  
-&nbsp;&nbsp;&nbsp;&nbsp;Set the directory where your rules should apply.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the directory where your rules should apply.
 
 owner = username|UID  
-&nbsp;&nbsp;&nbsp;&nbsp;Set the owner of all the files and directories.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the owner of all the files and directories.
 
 group = groupname|GID  
-&nbsp;&nbsp;&nbsp;&nbsp;Set the group of all the files and directories.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the group of all the files and directories.
 
 chmodf = permissions  
-&nbsp;&nbsp;&nbsp;&nbsp;Set the permission for all the files.  
-&nbsp;&nbsp;&nbsp;&nbsp;Accepted is octal (0777) or symbolic mode (comma separated list).  
-&nbsp;&nbsp;&nbsp;&nbsp;Symbolic mode has limited functionality and only supports  
-&nbsp;&nbsp;&nbsp;&nbsp;[ugoa][+-=][rwxugo]  
-&nbsp;&nbsp;&nbsp;&nbsp;You can use set-UID, set-GID and sticky-bit if you wish to. E.g. 4660.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the permission for all the files.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Accepted is octal (0777) or symbolic mode (comma separated list).  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Symbolic mode has limited functionality and only supports  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ugoa][+-=][rwxugo]  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You can use set-UID, set-GID and sticky-bit if you wish to. E.g. 4660.
 
 chmodd = permissions  
-&nbsp;&nbsp;&nbsp;&nbsp;Set the permission of all the directories.  
-&nbsp;&nbsp;&nbsp;&nbsp;See chmodf above.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the permission of all the directories.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;See chmodf above.
 
 excludepath = /path/to/exclude/dir,/path/to/exclude/file...  
-&nbsp;&nbsp;&nbsp;&nbsp;Exclude some directories and files from the rules (comma  seperated).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exclude some directories and files from the rules (comma  seperated).
 
 excludepattern = regular expression  
-&nbsp;&nbsp;&nbsp;&nbsp;Exclude files (and only files) based on a pattern.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exclude files (and only files) based on a pattern.
 
 
 ##Inotify Configuration
