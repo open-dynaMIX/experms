@@ -81,13 +81,13 @@ excludepath = /first/directory/exclude1,/first/directory/subdir/exclude2
 path = /second/directory
 group = second-group
 chmodf = 0644
-excludepattern = .txt|.TXT|.sh|.SH
+excludepattern = .txt$|.TXT$|.sh$|.SH$
 
 [directory_3]
 path = /second/directory/subdirectory
-group = third\-group
-chmodf = g+w
-chmodd = o-rx
+group = third-group
+chmodf = g+w,o-r
+chmodd = g+w,o-rx
 ```
 
 ###General Section
@@ -138,7 +138,7 @@ Per default this is set to 8192.
 You can increase this number by writing to /proc/sys/fs/inotify/max_user_watches  
 To make this change permanent, the following line should be added to  
 /etc/sysctl.conf or /etc/sysctl.d/99-sysctl.conf  
-fs.inotify.max_user_watches=8192 (your amount of directories)
+`fs.inotify.max_user_watches=8192` (your amount of directories)
 
 You can check the amount of directories recursively with:
 
