@@ -34,16 +34,19 @@ You can start and/or enable experms with systemd:
 Following arguments are available:
 
 ```
-usage: experms [-h] [-r] [-c] [-v] [-d]
+usage: experms [-h] [-c CONFIG] [-r] [-t] [-v] [-d]
 
 experms
 
 optional arguments:
-  -h, --help     show this help message and exit
-  -r, --restore  Just restore all the permissions and exit.
-  -c, --count    Count the directories to watch and exit.
-  -v, --version  Print the version and exit.
-  -d, --debug    Print debug-messages.
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        Configuration file to use.
+  -r, --restore         Just restore all the permissions and exit.
+  -t, --total           Count the directories to watch and exit.
+  -v, --version         Print the version and exit.
+  -d, --debug           Print debug-messages.
+
 ```
 
 
@@ -52,9 +55,10 @@ Note: You need to edit the configuration file before running experms for the
 
 
 ##The Configuration File
-experms.conf is located under /etc/experms.conf
+experms.conf is located under /etc/experms.conf  
+You can use another file with the argument '--config'.
 
-If changes happened to experms.conf, it is necessary to restart..
+If changes happened to experms.conf, it is necessary to restart  
 experms.
 
 ###Example

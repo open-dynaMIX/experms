@@ -41,14 +41,14 @@ def main():
     if args.restore:
         if args.debug:
             debug_message()
-        config = configfile.main.Check(args.debug)
+        config = configfile.main.Check(args.config, args.debug)
         restore(config, args.debug)
         sys.exit(0)
 
-    if args.count:
+    if args.total:
         if args.debug:
             debug_message()
-        config = configfile.main.Check(args.debug)
+        config = configfile.main.Check(args.config, args.debug)
         print ("Directories configured for watching:\n%s"
                % len(collect(config)[0]))
         with open('/proc/sys/fs/inotify/max_user_watches', 'r') as inotifyconf:
@@ -60,7 +60,7 @@ def main():
     if args.debug:
         debug_message()
 
-    config = configfile.main.Check(args.debug)
+    config = configfile.main.Check(args.config, args.debug)
 
     if config.restore:
         if args.debug:

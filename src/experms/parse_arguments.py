@@ -9,11 +9,15 @@ def parse_arguments():
                                formatter_class=argparse.
                                RawDescriptionHelpFormatter)
 
+      parser.add_argument("-c", "--config", dest="config",
+                              help="Configuration file to use.")
+      parser.set_defaults(command=None)
+
       parser.add_argument("-r", "--restore", dest="restore",
                                 action="store_true", help="Just restore all "
                                 "the permissions and exit.")
 
-      parser.add_argument("-c", "--count", dest="count",
+      parser.add_argument("-t", "--total", dest="total",
                                 action="store_true", help="Count the "
                                 "directories to watch and exit.")
 

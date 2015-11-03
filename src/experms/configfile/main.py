@@ -27,7 +27,7 @@ class Check(object):
     self.excludepath = ['excludepath1','excludepath2','excludepath3']
     self.excluderegex = ['regex1','regex2','regex3']
     """
-    def __init__(self, debug):
+    def __init__(self, config, debug):
         self.debug = debug
 
         # default values for the section general
@@ -46,25 +46,31 @@ class Check(object):
 
         self.errorsoccured = False
 
-        configfile = self.find_configfile()
+        configfile = self.find_configfile(config)
 
         parser = self.parse_configfile(configfile)
 
         self.call_checks(parser)
 
 
-    def find_configfile(self):
-        if os.path.isfile('/etc/experms.conf'):
-            configfile = '/etc/experms.conf'
-        elif os.path.isfile(sys.path[0] + '/experms.conf'):
-            configfile = sys.path[0] + '/experms.conf'
+    def find_configfile(self, config):
+        if config:
+            if os.path.isfile(config):
+                configfile = config
+            else:
+                print >> sys.stderr, ("\033[31;1mError: Configuration-file "
+                                      "('%s' does not exist.\033[0m" % config)
+                sys.exit(1)
         else:
-            print >> sys.stderr, ("\033[31;1mError: No configuration-file "
-                                  "(/etc/experms.conf) was found.\033[0m")
-            sys.exit(1)
+            if os.path.isfile('/etc/experms.conf'):
+                configfile = '/etc/experms.conf'
+            else:
+                print >> sys.stderr, ("\033[31;1mError: No configuration-file "
+                                      "(/etc/experms.conf) was found.\033[0m")
+                sys.exit(1)
         if self.debug:
             print >> sys.stderr, ("[debug] Using configuration-file '%s'"
-                                  % configfile)
+                                  % os.path.abspath(configfile))
         return configfile
 
 
