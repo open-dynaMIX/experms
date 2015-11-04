@@ -50,7 +50,7 @@ class EventHandler(pyinotify.ProcessEvent):
     def process_IN_MOVED_TO(self, event):
         prepare(event.pathname, "IN_MOVED_TO", event.dir, self.config, self.debug)
         if event.dir:
-            # handle all nested files in event.filename
+            # handle all nested files in event.pathname
             for root, dirnames, filenames in os.walk(event.pathname):
                 for filename in filenames:
                     filenamewrite = os.path.join(root, filename)
