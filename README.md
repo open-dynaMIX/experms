@@ -147,4 +147,4 @@ To make this change permanent, the following line should be added to
 
 You can check the amount of directories recursively with:
 
-`# experms --count`
+`# experms --total`
