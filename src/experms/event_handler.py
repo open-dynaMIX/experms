@@ -6,46 +6,21 @@ from action.prepare_files import prepare
 
 class EventHandler(pyinotify.ProcessEvent):
     """
-    Taken from
-    www.saltycrane.com/blog/2010/04/monitoring-filesystem-python-and-pyinotify/
+    pyinotify EventHandler
     """
 
     def __init__(self, config, debug):
         self.config = config
         self.debug = debug
 
-    def process_IN_ACCESS(self, event):
-        # not watched
-        pass
-
     def process_IN_ATTRIB(self, event):
         prepare(event.pathname, "IN_ATTRIB", event.dir, self.config, self.debug)
-
-    def process_IN_CLOSE_NOWRITE(self, event):
-        # not watched
-        pass
-
-    def process_IN_CLOSE_WRITE(self, event):
-        # not watched
-        pass
 
     def process_IN_CREATE(self, event):
         prepare(event.pathname, "IN_CREATE", event.dir, self.config, self.debug)
 
-    def process_IN_DELETE(self, event):
-        # not watched
-        pass
-
     def process_IN_MODIFY(self, event):
         prepare(event.pathname, "IN_MODIFY", event.dir, self.config, self.debug)
-
-    def process_IN_OPEN(self, event):
-        # not watched
-        pass
-
-    def process_IN_MOVE_SELF(self, event):
-        # not watched
-        pass
 
     def process_IN_MOVED_TO(self, event):
         prepare(event.pathname, "IN_MOVED_TO", event.dir, self.config, self.debug)
