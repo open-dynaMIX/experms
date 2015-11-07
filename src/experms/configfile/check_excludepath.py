@@ -31,13 +31,6 @@ def check_excludepath(parser, section, path, debug):
                     print >> sys.stderr, ("Error in section '%s': "
                                           "'excludepath' must be inside 'path'"
                                           % section)
-
-
-        if not excludepath == False:
-            if path in excludepath:
-                excludepath = False
-                print >> sys.stderr, ("Error in section '%s': 'path' is in "
-                                      "'excludepath'" % (section))
     else:
         excludepath = None
         if debug:
