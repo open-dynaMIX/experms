@@ -162,11 +162,7 @@ class Check(object):
 
             tempexcludepath = check_excludepath(parser, section,
                                                 self.path[-1], self.debug)
-            excludepatherror = False
-            for location in tempexcludepath:
-                if not location:
-                    excludepatherror = True
-            if excludepatherror:
+            if tempexcludepath == False:
                 self.excludepath.append(None)
                 self.errorsoccured = True
             else:

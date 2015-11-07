@@ -7,9 +7,10 @@ from action import main as action
 
 
 def is_excluded(path, excludepath, excluderegex):
-    for excl in excludepath:
-        if path.startswith(excl + '/') or path == excl:
-            return True
+    if excludepath:
+        for excl in excludepath:
+            if path.startswith(excl + '/') or path == excl:
+                return True
 
     if excluderegex:
         p = re.compile(excluderegex)
