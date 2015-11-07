@@ -44,5 +44,3 @@ def check_excludepath(parser, section, path, debug):
                                   "is not set" % section)
 
     return excludepath
-
-
