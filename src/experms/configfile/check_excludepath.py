@@ -14,23 +14,30 @@ def check_excludepath(parser, section, path, debug):
             if item == '':
                 continue
             else:
-                if not item.startswith(path):
-                    print >> sys.stderr, ("Error in section '%s': "
-                                          "'excludepath' must be inside 'path'"
-                                          % section)
-                    excludepath = False
-                else:
+                if item.startswith(path) and not item == path:
                     if not excludepath == False:
                         excludepath.append(item)
                     if debug:
                         print >> sys.stderr, ("[debug] 'excludepath' '%s' in "
                                               "section '%s' is valid"
                                               % (item, section))
+                elif item == path:
+                    excludepath = False
+                    print >> sys.stderr, ("Error in section '%s': "
+                                          "'excludepath' cannot be the same "
+                                          "as 'path'" % section)
+                else:
+                    excludepath = False
+                    print >> sys.stderr, ("Error in section '%s': "
+                                          "'excludepath' must be inside 'path'"
+                                          % section)
 
-        if path in excludepath:
-            excludepath = False
-            print >> sys.stderr, ("Error in section '%s': 'path' is in "
-                                  "'excludepath'" % (section))
+
+        if not excludepath == False:
+            if path in excludepath:
+                excludepath = False
+                print >> sys.stderr, ("Error in section '%s': 'path' is in "
+                                      "'excludepath'" % (section))
     else:
         excludepath = None
         if debug:
