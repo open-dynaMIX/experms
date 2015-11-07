@@ -12,52 +12,55 @@ def check_ownerandgroup(parser, section, oorg, debug):
         switch = "Group"
 
     if not parser.has_option(section, oorg):
-        owner = None
         if debug:
             print >> sys.stderr, ("[debug] '%s' in section '%s' is not set."
                                   % (oorg, section))
-    else:
-        tempowner = parser.get(section, oorg)
-        if tempowner == '':
-            owner = None
-        else:
-            try:
-                tempowner = int(tempowner)
-            except ValueError:
-                try:
-                    if oorg == 'owner':
-                        pwd.getpwnam(tempowner)
-                    else:
-                        grp.getgrnam(tempowner)
-                except KeyError:
-                    owner = False
-                    print >> sys.stderr, ("Error in section '%s': %s '%s' "
-                                          "doesn't exist." % (section, switch,
-                                          tempowner))
-                else:
-                    # save the user/group as uid
-                    if oorg == 'owner':
-                        owner = pwd.getpwnam(tempowner).pw_uid
-                    else:
-                        owner = grp.getgrnam(tempowner).gr_gid
-                    if debug:
-                        print >> sys.stderr, ("[debug] '%s' in section '%s' "
-                                              "is valid" % (oorg, section))
+        return None
+
+    tempowner = parser.get(section, oorg)
+    if tempowner == '':
+        if debug:
+            print >> sys.stderr, ("[debug] '%s' in section '%s' is not "
+                                  "set." % (oorg, section))
+        return None
+
+    try:
+        tempowner = int(tempowner)
+    except ValueError:
+        try:
+            if oorg == 'owner':
+                pwd.getpwnam(tempowner)
             else:
-                try:
-                    if oorg == 'owner':
-                        pwd.getpwuid(tempowner)
-                    else:
-                        grp.getgrgid(tempowner)
-                except KeyError:
-                    print >> sys.stderr, ("Error in section '%s': %s '%s' "
-                                          "doesn't exist." % (section, switch,
-                                          tempowner))
-                    owner = False
-                else:
-                    owner = tempowner
-                    if debug:
-                        print >> sys.stderr, ("[debug] '%s' in section '%s' "
-                                              "is valid" % (oorg, section))
+                grp.getgrnam(tempowner)
+        except KeyError:
+            owner = False
+            print >> sys.stderr, ("Error in section '%s': %s '%s' "
+                                  "doesn't exist." % (section, switch,
+                                  tempowner))
+        else:
+            # save the user/group as uid
+            if oorg == 'owner':
+                owner = pwd.getpwnam(tempowner).pw_uid
+            else:
+                owner = grp.getgrnam(tempowner).gr_gid
+            if debug:
+                print >> sys.stderr, ("[debug] '%s' in section '%s' "
+                                      "is valid" % (oorg, section))
+    else:
+        try:
+            if oorg == 'owner':
+                pwd.getpwuid(tempowner)
+            else:
+                grp.getgrgid(tempowner)
+        except KeyError:
+            print >> sys.stderr, ("Error in section '%s': %s '%s' "
+                                  "doesn't exist." % (section, switch,
+                                  tempowner))
+            owner = False
+        else:
+            owner = tempowner
+            if debug:
+                print >> sys.stderr, ("[debug] '%s' in section '%s' "
+                                      "is valid" % (oorg, section))
 
     return owner
