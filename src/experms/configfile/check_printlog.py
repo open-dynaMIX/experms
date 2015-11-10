@@ -14,6 +14,11 @@ def check_printlog(parser, logitdefault, debug):
             logit = False
             if debug:
                 print >> sys.stderr, ("[debug] experms won't print a log")
+        elif logit == '':
+            logit = logitdefault
+            if debug:
+                print >> sys.stderr, ("[debug] 'log_activities' defaults to "
+                                      "%s" % logitdefault)
         else:
             print >> sys.stderr, ("Error: 'log_activities' "
                                   "must be either 'yes' or 'no'")

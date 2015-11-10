@@ -7,9 +7,9 @@ import os
 def check_path(parser, section, debug):
     if parser.has_option(section, 'path'):
         dirname = parser.get(section, 'path').rstrip('/')
-        if dirname == '':
-            print >> sys.stderr, ("Error in section '%s': 'dirname' is not set."
-                                  % section)
+        if dirname in ['', 'None', 'none']:
+            print >> sys.stderr, ("Error in section '%s': 'dirname' is not "
+                                  "set" % section)
             path = None
         else:
             if not os.path.isdir(os.path.expanduser(dirname)):
@@ -22,7 +22,7 @@ def check_path(parser, section, debug):
                     print >> sys.stderr, ("[debug] 'path' in section '%s' "
                                           "is valid" % section)
     else:
-        print >> sys.stderr, ("Error in section '%s': 'dirname' is not set."
+        print >> sys.stderr, ("Error in section '%s': 'dirname' is not set"
                               % section)
         path = None
 

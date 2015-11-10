@@ -11,7 +11,7 @@ def check_excludepath(parser, section, path, debug):
         tempexcludepath = parser.get(section, 'excludepath').split(',')
         for item in tempexcludepath:
             item = os.path.expanduser(item).strip().rstrip('/')
-            if item == '':
+            if item in ['', 'None', 'none']:
                 continue
             else:
                 if item.startswith(path) and not item == path:
@@ -29,8 +29,8 @@ def check_excludepath(parser, section, path, debug):
                 else:
                     excludepath = False
                     print >> sys.stderr, ("Error in section '%s': "
-                                          "'excludepath' must be inside 'path'"
-                                          % section)
+                                          "'excludepath' must be inside "
+                                          "'path'" % section)
     else:
         excludepath = None
         if debug:

@@ -13,15 +13,15 @@ def check_ownerandgroup(parser, section, oorg, debug):
 
     if not parser.has_option(section, oorg):
         if debug:
-            print >> sys.stderr, ("[debug] '%s' in section '%s' is not set."
+            print >> sys.stderr, ("[debug] '%s' in section '%s' is not set"
                                   % (oorg, section))
         return None
 
     tempowner = parser.get(section, oorg)
-    if tempowner == '':
+    if tempowner in ['', 'None', 'none']:
         if debug:
             print >> sys.stderr, ("[debug] '%s' in section '%s' is not "
-                                  "set." % (oorg, section))
+                                  "set" % (oorg, section))
         return None
 
     try:
@@ -35,7 +35,7 @@ def check_ownerandgroup(parser, section, oorg, debug):
         except KeyError:
             owner = False
             print >> sys.stderr, ("Error in section '%s': %s '%s' "
-                                  "doesn't exist." % (section, switch,
+                                  "doesn't exist" % (section, switch,
                                   tempowner))
         else:
             # save the user/group as uid
@@ -54,7 +54,7 @@ def check_ownerandgroup(parser, section, oorg, debug):
                 grp.getgrgid(tempowner)
         except KeyError:
             print >> sys.stderr, ("Error in section '%s': %s '%s' "
-                                  "doesn't exist." % (section, switch,
+                                  "doesn't exist" % (section, switch,
                                   tempowner))
             owner = False
         else:

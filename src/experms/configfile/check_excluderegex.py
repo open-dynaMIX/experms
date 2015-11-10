@@ -10,7 +10,7 @@ def check_excluderegex(parser, section, debug):
 
     if parser.has_option(section, 'excluderegex'):
         tempexcluderegex = parser.get(section, 'excluderegex')
-        if tempexcluderegex == '':
+        if tempexcluderegex in ['', 'None', 'none']:
             excluderegex = None
         else:
             try:
@@ -28,7 +28,7 @@ def check_excluderegex(parser, section, debug):
     else:
         excluderegex = None
 
-    if excluderegex in [None, '']:
+    if excluderegex == None:
         if debug:
             print >> sys.stderr, ("[debug] 'excluderegex' in section '%s' "
                                   "is not set" % section)

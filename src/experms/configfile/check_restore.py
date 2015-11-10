@@ -16,6 +16,11 @@ def check_restore(parser, restoredefault, debug):
             if debug:
                 print >> sys.stderr, ("[debug] experms won't restore at "
                                       "startup")
+        elif restore == '':
+            restore = restoredefault
+            if debug:
+                print >> sys.stderr, ("[debug] 'restore' defaults to "
+                                      "%s" % restoredefault)
         else:
             print >> sys.stderr, ("Error: 'restore' must be "
                                   "either 'yes' or 'no'")
