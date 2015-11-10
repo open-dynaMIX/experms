@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import sys
 
 
 def parse_arguments():
-      parser = argparse.ArgumentParser(description=sys.argv[0],
-                               formatter_class=argparse.
-                               RawDescriptionHelpFormatter)
+      parser = argparse.ArgumentParser(description="Monitor file-changes "
+                                       "and adjust permissions and "
+                                       "ownerships.", formatter_class=argparse.
+                                       RawDescriptionHelpFormatter)
 
       parser.add_argument("-c", "--config", dest="config",
                               help="Configuration file to use")
