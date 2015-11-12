@@ -41,11 +41,11 @@ experms
 optional arguments:
   -h, --help            show this help message and exit
   -c CONFIG, --config CONFIG
-                        Configuration file to use.
-  -r, --restore         Just restore all the permissions and exit.
-  -t, --total           Count the directories to watch and exit.
-  -v, --version         Print the version and exit.
-  -d, --debug           Print debug-messages.
+                        Configuration file to use
+  -r, --restore         Just restore all the permissions and exit
+  -t, --total           Count the directories to watch and exit
+  -v, --version         Print the version and exit
+  -d, --debug           Print debug-messages
 
 ```
 
