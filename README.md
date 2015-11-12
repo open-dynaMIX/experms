@@ -96,10 +96,10 @@ chmodd = g+w,o-rx
 ```
 
 ###General Section
-log_activities = yes | no  
+**log_activities = yes | no**  
 Decide, if experms should print a log.
 
-restore = yes | no  
+**restore = yes | no**  
 Decide, if experms should restore all the ownerships and permissions  
 of all files based on the config-file. In case there were changes  
 while experms was not running.
