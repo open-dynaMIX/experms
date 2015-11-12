@@ -7,7 +7,7 @@ Or see the file ./COPYING
 Monitors file-changes happened in the directory set in experms.conf. If changes  
 happened, it adjusts the file-permissions and ownership/group.
 
-You can either define one directory, or several sub-directories with different  
+You can either define directories (and also sub-directories) with different  
 ownerships and permissions.
 
 It also allows exclusions based on directories or patterns (regex).  
